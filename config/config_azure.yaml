@@ -1,0 +1,59 @@
+qdrant:
+  host: "localhost"
+  port: 6333
+  collection_name: "rag_documents"
+  vector_size: 3072
+  distance_metric: "Cosine"
+
+embedding:
+  provider: "azure"
+  model: "text-embedding-3-large"
+  batch_size: 20              # ← 降到 20
+  max_retries: 10             # ← 增加重试
+  timeout: 120                # ← 增加超时
+
+chunking:
+  chunk_size: 1000
+  overlap: 200
+  min_chunk_size: 100
+  max_chunk_size: 8000
+  respect_sentence: true
+  language: "auto"
+  use_nltk: true
+  use_spacy: true
+  use_semantic_chunking: false
+
+cleaning:
+  remove_headers: true
+  remove_footers: true
+  remove_page_numbers: true
+  min_line_length: 10
+  custom_patterns: []
+  use_chardet: true
+  default_encoding: "utf-8"
+
+categories:
+  - name: "agentic_ai"
+    keywords: ["agent", "autonomous", "gpt", "llm"]
+    path: "documents/agentic_ai"
+  - name: "general"
+    keywords: []
+    path: "documents/general"
+
+processing:
+  batch_size: 2               # ← 每批只处理 2 个文件
+  max_workers: 1
+  use_multiprocessing: false
+  show_progress: true
+  enable_caching: true
+  cache_dir: "data/cache"
+  skip_errors: true
+  max_errors: 10
+
+logging:
+  level: "INFO"
+  file: "logs/rag_system.log"
+  format: "%(asctime)s | %(levelname)-8s | %(name)s | %(message)s"
+  date_format: "%Y-%m-%d %H:%M:%S"
+  console_output: true
+  colored_output: true
