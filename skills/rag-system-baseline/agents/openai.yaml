@@ -1,0 +1,7 @@
+interface:
+  display_name: "RAG System Baseline"
+  short_description: "Repository baseline for safe and verifiable RAG changes"
+  default_prompt: "Use $rag-system-baseline to apply this repository's baseline before modifying code, scripts, or config."
+
+policy:
+  allow_implicit_invocation: true

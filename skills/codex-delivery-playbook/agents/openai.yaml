@@ -1,0 +1,7 @@
+interface:
+  display_name: "Codex Delivery Playbook"
+  short_description: "Execution planning with validation and rollback gates"
+  default_prompt: "Use $codex-delivery-playbook to turn this request into an implementation-ready delivery contract with tests and rollback."
+
+policy:
+  allow_implicit_invocation: true

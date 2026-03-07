@@ -1,0 +1,54 @@
+# requirements.txt - 基础依赖
+
+# Qdrant 向量数据库客户端
+qdrant-client>=1.7.0
+
+# HTTP 请求
+requests>=2.31.0
+
+# 配置文件
+pyyaml>=6.0
+
+# PDF 处理
+pypdf>=3.17.0
+
+# HTML 处理
+beautifulsoup4>=4.12.0
+lxml>=4.9.0
+
+# 进度条
+tqdm>=4.66.0
+
+# 环境变量
+python-dotenv>=1.0.0
+
+# ============================================
+# 可选增强依赖（推荐安装）
+# ============================================
+# 取消注释以启用增强功能
+
+# 编码检测 - 避免中文乱码
+# chardet>=5.2.0
+
+# NLTK - 更好的句子分割
+# nltk>=3.8.1
+
+# spaCy - NLP 功能（实体识别、关键词提取）
+# spacy>=3.7.0
+
+# ============================================
+# 安装说明
+# ============================================
+# 
+# 基础安装:
+#   pip install -r requirements.txt
+# 
+# 增强安装（推荐）:
+#   pip install -r requirements.txt
+#   pip install chardet nltk spacy
+#   python -m nltk.downloader punkt punkt_tab
+#   python -m spacy download zh_core_web_sm
+#   python -m spacy download en_core_web_sm
+# 
+# 或直接安装增强版:
+#   pip install -r requirements_enhanced.txt

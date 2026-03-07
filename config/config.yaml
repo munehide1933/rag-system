@@ -1,0 +1,215 @@
+# config.yaml - RAG 系统配置模板
+
+# ============================================
+# Qdrant 向量数据库配置
+# ============================================
+qdrant:
+  host: "localhost"
+  port: 6333
+  collection_name: "rag_documents"
+  vector_size: 1536  # OpenAI ada-002: 1536, ada-001: 1024
+  distance_metric: "Cosine"  # Cosine, Dot, Euclidean
+
+# ============================================
+# Embedding 配置
+# ============================================
+embedding:
+  provider: "openai"  # openai, huggingface, local
+  model: "text-embedding-ada-002"
+  
+  # OpenAI API 配置
+  api_key_env: "OPENAI_API_KEY"  # 环境变量名
+  api_base: null  # 可选：自定义 API 端点
+  
+  # 性能配置
+  batch_size: 100  # 批量处理大小
+  max_retries: 3
+  timeout: 30
+  
+  # 本地模型配置（如果 provider: "local"）
+  # model_path: "models/sentence-transformers"
+  # device: "cpu"  # cpu, cuda
+
+# ============================================
+# 文本分块配置
+# ============================================
+chunking:
+  chunk_size: 800        # 目标块大小（字符）
+  overlap: 150           # 重叠大小（字符）
+  min_chunk_size: 100    # 最小块大小
+  max_chunk_size: 2000   # 最大块大小
+  respect_sentence: true # 是否尊重句子边界
+  language: "auto"       # auto, zh, en
+  
+  # 增强功能（需要额外库）
+  use_nltk: true         # 使用 NLTK 分句（推荐）
+  use_spacy: true        # 使用 spaCy NLP（可选）
+  use_semantic_chunking: false  # 语义分块（实验性）
+
+# ============================================
+# 文本清洗配置
+# ============================================
+cleaning:
+  remove_headers: true
+  remove_footers: true
+  remove_page_numbers: true
+  min_line_length: 10
+  
+  # 自定义移除模式（正则表达式）
+  custom_patterns:
+    - '^Page\s+\d+\s+of\s+\d+$'
+    - '^Copyright.*$'
+    - '^©.*$'
+  
+  # 编码检测
+  use_chardet: true      # 自动检测文件编码（强烈推荐）
+  default_encoding: "utf-8"
+
+# ============================================
+# 文档分类配置
+# ============================================
+categories:
+  - name: "agentic_ai"
+    description: "AI Agent 和自主系统相关文档"
+    keywords:
+      - "agent"
+      - "autonomous"
+      - "gpt"
+      - "llm"
+      - "claude"
+      - "langchain"
+      - "autogpt"
+      - "babyagi"
+      - "reasoning"
+      - "planning"
+    path: "documents/agentic_ai"
+    metadata:
+      color: "#FF6B6B"
+      icon: "🤖"
+      
+  - name: "cs_architecture"
+    description: "计算机架构和系统设计"
+    keywords:
+      - "kubernetes"
+      - "docker"
+      - "microservice"
+      - "aws"
+      - "azure"
+      - "cloud"
+      - "devops"
+      - "architecture"
+      - "distributed"
+      - "scalability"
+    path: "documents/cs_architecture"
+    metadata:
+      color: "#4ECDC4"
+      icon: "🏗️"
+      
+  - name: "machine_learning"
+    description: "机器学习和深度学习"
+    keywords:
+      - "neural network"
+      - "deep learning"
+      - "tensorflow"
+      - "pytorch"
+      - "transformer"
+      - "cnn"
+      - "rnn"
+      - "gradient"
+      - "training"
+      - "model"
+    path: "documents/machine_learning"
+    metadata:
+      color: "#95E1D3"
+      icon: "🧠"
+      
+  - name: "programming"
+    description: "编程语言和开发"
+    keywords:
+      - "python"
+      - "javascript"
+      - "react"
+      - "api"
+      - "database"
+      - "sql"
+      - "algorithm"
+      - "data structure"
+    path: "documents/programming"
+    metadata:
+      color: "#F38181"
+      icon: "💻"
+      
+  - name: "general"
+    description: "通用文档"
+    keywords: []
+    path: "documents/general"
+    metadata:
+      color: "#CCCCCC"
+      icon: "📄"
+
+# ============================================
+# 处理配置
+# ============================================
+quality:
+  enabled: true
+  min_chunk_chars: 120
+  min_information_density: 0.35
+  max_non_text_ratio: 0.45
+  drop_numeric_only: true
+
+processing:
+  batch_size: 32         # 文档批处理大小
+  max_workers: 4         # 并行工作线程数
+  use_multiprocessing: true  # 使用多进程（推荐）
+  show_progress: true    # 显示进度条
+  
+  # 性能优化
+  enable_caching: true   # 启用 embedding 缓存
+  cache_dir: "data/cache"
+  replace_existing_source: true  # 按 source_path 清理旧向量后重建
+  
+  # 错误处理
+  skip_errors: true      # 跳过错误的文档
+  max_errors: 10         # 最大允许错误数
+
+# ============================================
+# 日志配置
+# ============================================
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  file: "logs/rag_system.log"
+  
+  # 格式配置
+  format: "%(asctime)s | %(levelname)-8s | %(name)s | %(message)s"
+  date_format: "%Y-%m-%d %H:%M:%S"
+  
+  # 输出配置
+  console_output: true   # 输出到控制台
+  colored_output: true   # 使用彩色输出（终端）
+
+# ============================================
+# 高级配置（可选）
+# ============================================
+
+# 元数据提取
+metadata:
+  extract_entities: true     # 提取命名实体（需要 spaCy）
+  extract_keywords: true     # 提取关键词（需要 spaCy）
+  max_keywords: 10           # 最大关键词数量
+  
+# 搜索配置
+search:
+  default_top_k: 5           # 默认返回结果数
+  min_score: 0.7             # 最低相似度分数
+  enable_reranking: false    # 启用重排序（未来功能）
+  
+# 监控配置
+monitoring:
+  enable_metrics: true       # 启用性能监控
+  metrics_file: "logs/metrics.json"
+  
+# 备份配置
+backup:
+  enable_auto_backup: false  # 自动备份
+  backup_dir: "backups"
+  backup_interval: 86400     # 备份间隔（秒）
