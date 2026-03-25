@@ -19,7 +19,7 @@
 - パイプライン実装（`src/`）
 - 実行スクリプト（`rag.sh`, `run_rag_pipeline.sh`, `query_v2.py`）
 - 設定ローダーとサンプル設定（`config/`）
-- 面接/公開用の証跡パック（`public/`）
+- 公開用の証跡パック（`public/`）
 - 公開前チェックツール（`tools/prepublish_guard.py`）
 
 公開されないローカルデータ:
